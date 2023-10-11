@@ -70,12 +70,11 @@ namespace Cargo.WebApi.Controllers
                 SenderLastName = x.SenderLastName,
                 SenderTelNo = x.SenderTelNo,
                 ShippingPrice = x.ShippingPrice,
-               PaymentBy=x.PaymentBy,
+                PaymentBy=x.PaymentBy,
                 Status = x.Status,
                 CargoNo = x.CargoNo,
                 Contents = x.Contents,
                 EmployeeId = x.EmployeeId,
-               
                 ProductName = x.ProductName,
                 RecieverAddress = x.RecieverAddress,
                 RecieverCity = x.RecieverCity,

@@ -18,49 +18,55 @@ namespace Cargo.Business.Managers
         public UserManager(IRepository<EmployeeEntity> employeeRepository)
         {
             _employeeRepository = employeeRepository;
-                
+
         }
 
         public List<UserInfoDto> GetAllUser()
         {
-            var userInfoEntity = _employeeRepository.GetAll(); 
-             var userInfoDto=userInfoEntity.Select(x => new UserInfoDto
+            var userInfoEntity = _employeeRepository.GetAll();
+            var userInfoDto = userInfoEntity.Select(x => new UserInfoDto
             {
-               Id = x.Id,
-               Email = x.Email,
-               FirstName = x.FirstName,
-               LastName = x.LastName,
+                Id = x.Id,
+                Email = x.Email,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
 
 
             }).ToList();
             return userInfoDto;
-           
 
-           
+
+
         }
 
         public UserInfoDto LoginUser(LoginUserDto loginUserDto)
         {
-            var employeeEntity=_employeeRepository.GetAll().FirstOrDefault(x=>x.Email==loginUserDto.Email && x.Password==loginUserDto.Password);
+            var employeeEntity = _employeeRepository.Get(x => x.Email == loginUserDto.Email);
 
-            if (employeeEntity is null) 
+            if (employeeEntity is null)
             {
                 return null;
             }
 
-            var userInfoDto = new UserInfoDto()
-            {
-                Email = employeeEntity.Email,
-                FirstName = employeeEntity.FirstName,
-                LastName = employeeEntity.LastName,
-                Id = employeeEntity.Id,
-            };
-            return userInfoDto;
 
+            if (employeeEntity.Password == loginUserDto.Password)
+            {
+
+
+                var userInfoDto = new UserInfoDto()
+                {
+                    Email = employeeEntity.Email,
+                    FirstName = employeeEntity.FirstName,
+                    LastName = employeeEntity.LastName,
+                    Id = employeeEntity.Id,
+                };
+                return userInfoDto;
+            }
+            return null;
 
 
 
         }
-        
+
     }
 }
